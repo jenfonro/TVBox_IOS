@@ -32,23 +32,23 @@ struct SettingsView: View {
                     if settings.proxy != nil {
                         TextField("代理協議 (http / https / socks5)", text: Binding(
                             get: { settings.proxy?.scheme ?? "" },
-                            set: { settings.updateProxy { $0.scheme = $1 } }
+                            set: { newValue in settings.updateProxy { $0.scheme = newValue } }
                         ))
                         TextField("主機", text: Binding(
                             get: { settings.proxy?.host ?? "" },
-                            set: { settings.updateProxy { $0.host = $1 } }
+                            set: { newValue in settings.updateProxy { $0.host = newValue } }
                         ))
                         TextField("埠", text: Binding(
                             get: { settings.proxy?.portString ?? "" },
-                            set: { settings.updateProxy { $0.portString = $1 } }
+                            set: { newValue in settings.updateProxy { $0.portString = newValue } }
                         ))
                         TextField("使用者", text: Binding(
                             get: { settings.proxy?.username ?? "" },
-                            set: { settings.updateProxy { $0.username = $1 } }
+                            set: { newValue in settings.updateProxy { $0.username = newValue } }
                         ))
                         SecureField("密碼", text: Binding(
                             get: { settings.proxy?.password ?? "" },
-                            set: { settings.updateProxy { $0.password = $1 } }
+                            set: { newValue in settings.updateProxy { $0.password = newValue } }
                         ))
                     }
                 }
