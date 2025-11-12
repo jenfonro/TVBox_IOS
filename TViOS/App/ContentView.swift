@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 struct ContentView: View {
     var body: some View {
         TabView {
@@ -13,6 +14,7 @@ struct ContentView: View {
     }
 }
 
+@MainActor
 private struct OnDemandContainerView: View {
     @EnvironmentObject private var appState: AppState
 
@@ -26,6 +28,7 @@ private struct OnDemandContainerView: View {
     }
 }
 
+@MainActor
 private struct LiveContainerView: View {
     @EnvironmentObject private var appState: AppState
 
@@ -39,6 +42,7 @@ private struct LiveContainerView: View {
     }
 }
 
+@MainActor
 private struct SettingsContainerView: View {
     @EnvironmentObject private var appState: AppState
 

@@ -1,6 +1,7 @@
 import SwiftUI
 import AVKit
 
+@MainActor
 struct PlayerScreen: View {
     @EnvironmentObject private var appState: AppState
     let item: PlayableItem

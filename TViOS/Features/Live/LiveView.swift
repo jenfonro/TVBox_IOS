@@ -49,6 +49,7 @@ final class LiveViewModel: ObservableObject {
     }
 }
 
+@MainActor
 struct LiveView: View {
     @StateObject private var viewModel: LiveViewModel
 

@@ -77,6 +77,7 @@ final class OnDemandViewModel: ObservableObject {
     }
 }
 
+@MainActor
 struct OnDemandView: View {
     @StateObject private var viewModel: OnDemandViewModel
 
