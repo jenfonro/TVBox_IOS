@@ -275,8 +275,12 @@
 			);
 			PRODUCT_BUNDLE_IDENTIFIER = com.fongmi.ios.tv;
 			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
 			SWIFT_EMIT_LOC_STRINGS = NO;
 			SWIFT_VERSION = 5.9;
+			SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 			TARGETED_DEVICE_FAMILY = "1,2";
 			VERSIONING_SYSTEM = "apple-generic";
 		};
@@ -301,8 +305,12 @@
 			);
 			PRODUCT_BUNDLE_IDENTIFIER = com.fongmi.ios.tv;
 			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
 			SWIFT_EMIT_LOC_STRINGS = NO;
 			SWIFT_VERSION = 5.9;
+			SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 			TARGETED_DEVICE_FAMILY = "1,2";
 			VERSIONING_SYSTEM = "apple-generic";
 		};
