@@ -36,13 +36,21 @@ struct ProxyConfig: Codable, Equatable {
         default: proxyType = kCFProxyTypeHTTP
         }
         var dict: [AnyHashable: Any] = [
-            kCFProxyTypeKey: proxyType,
-            kCFNetworkProxiesHTTPEnable: true,
-            kCFNetworkProxiesHTTPProxy: host,
-            kCFNetworkProxiesHTTPPort: portValue,
-            kCFNetworkProxiesProxyAutoConfigEnable: false,
-            kCFNetworkProxiesSOCKSEnable: proxyType == kCFProxyTypeSOCKS
+            kCFProxyTypeKey: proxyType
         ]
+        if proxyType == kCFProxyTypeSOCKS {
+            dict[kCFProxyHostNameKey] = host
+            if portValue > 0 {
+                dict[kCFProxyPortNumberKey] = portValue
+            }
+        } else {
+            dict[kCFNetworkProxiesHTTPEnable] = true
+            dict[kCFNetworkProxiesHTTPProxy] = host
+            if portValue > 0 {
+                dict[kCFNetworkProxiesHTTPPort] = portValue
+            }
+            dict[kCFNetworkProxiesProxyAutoConfigEnable] = false
+        }
         if !username.isEmpty { dict[kCFProxyUsernameKey] = username }
         if !password.isEmpty { dict[kCFProxyPasswordKey] = password }
         return dict
