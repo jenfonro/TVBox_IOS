@@ -2,13 +2,7 @@ name: ios-build
 
 on:
   push:
-    paths:
-      - "iostv/**"
-      - ".github/workflows/ios-build.yml"
   pull_request:
-    paths:
-      - "iostv/**"
-      - ".github/workflows/ios-build.yml"
 
 jobs:
   build:
