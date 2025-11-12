@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class LiveRepository {
     enum LiveError: Error, LocalizedError {
         case missingBundleResource

@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class CatalogRepository {
     enum CatalogError: Error, LocalizedError {
         case missingBundleResource
