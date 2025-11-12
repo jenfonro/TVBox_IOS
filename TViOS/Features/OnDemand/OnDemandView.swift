@@ -86,23 +86,7 @@ struct OnDemandView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            VStack(spacing: 12) {
-                sitePicker
-                categoryPicker
-                searchField
-                contentList
-            }
-            .padding()
-            .navigationTitle("點播")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { Task { await viewModel.load() } } label: {
-                        Image(systemName: "arrow.clockwise")
-                    }
-                    .disabled(viewModel.isLoading)
-                }
-            }
+        navigationContainer
             .task { await viewModel.load() }
             .sheet(item: $viewModel.nowPlaying) { PlayerScreen(item: $0) }
             .alert(item: Binding(
@@ -110,6 +94,33 @@ struct OnDemandView: View {
                 set: { _ in viewModel.errorMessage = nil }
             )) { identified in
                 Alert(title: Text("錯誤"), message: Text(identified.message), dismissButton: .default(Text("好")))
+            }
+    }
+
+    @ViewBuilder
+    private var navigationContainer: some View {
+        if #available(iOS 16.0, *) {
+            NavigationStack { navigationContent }
+        } else {
+            NavigationView { navigationContent }
+        }
+    }
+
+    private var navigationContent: some View {
+        VStack(spacing: 12) {
+            sitePicker
+            categoryPicker
+            searchField
+            contentList
+        }
+        .padding()
+        .navigationTitle("點播")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button { Task { await viewModel.load() } } label: {
+                    Image(systemName: "arrow.clockwise")
+                }
+                .disabled(viewModel.isLoading)
             }
         }
     }
