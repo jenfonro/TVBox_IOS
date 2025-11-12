@@ -29,7 +29,7 @@ jobs:
         run: |
           set -euo pipefail
           xcodebuild \
-            -project iostv/TViOS.xcodeproj \
+            -project TViOS.xcodeproj \
             -scheme TViOS \
             -configuration Debug \
             -sdk iphonesimulator \
