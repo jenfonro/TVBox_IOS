@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 final class CatVodService {
     enum ServiceError: Error, LocalizedError {
         case baseURLMissing
