@@ -10,23 +10,19 @@
 	1F1000112B5E000100AA0017 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000112B5E000100AA0017 /* AppState.swift */; };
 	1F1000122B5E000100AA0017 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000122B5E000100AA0017 /* ContentView.swift */; };
 	1F1000132B5E000100AA0017 /* OnDemandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000132B5E000100AA0017 /* OnDemandView.swift */; };
-	1F1000142B5E000100AA0017 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000142B5E000100AA0017 /* LiveView.swift */; };
 	1F1000152B5E000100AA0017 /* PlayerScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000152B5E000100AA0017 /* PlayerScreen.swift */; };
 	1F1000162B5E000100AA0017 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000162B5E000100AA0017 /* SettingsView.swift */; };
 	1F1000172B5E000100AA0017 /* MediaModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000172B5E000100AA0017 /* MediaModels.swift */; };
-	1F1000182B5E000100AA0017 /* LiveModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000182B5E000100AA0017 /* LiveModels.swift */; };
 	1F1000192B5E000100AA0017 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000192B5E000100AA0017 /* SettingsModels.swift */; };
 	1F10001A2B5E000100AA0017 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001A2B5E000100AA0017 /* Style.swift */; };
 	1F10001B2B5E000100AA0017 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001B2B5E000100AA0017 /* APIClient.swift */; };
 	1F10001C2B5E000100AA0017 /* CatVodEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001C2B5E000100AA0017 /* CatVodEndpoints.swift */; };
 	1F10001D2B5E000100AA0017 /* CatalogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001D2B5E000100AA0017 /* CatalogRepository.swift */; };
-	1F10001E2B5E000100AA0017 /* LiveRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001E2B5E000100AA0017 /* LiveRepository.swift */; };
 	1F10001F2B5E000100AA0017 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001F2B5E000100AA0017 /* PlaybackController.swift */; };
 	1F1000202B5E000100AA0017 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000202B5E000100AA0017 /* SettingsStore.swift */; };
 	1F1000212B5E000100AA0017 /* CatVodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000212B5E000100AA0017 /* CatVodService.swift */; };
 	1F1000222B5E000100AA0017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F2000222B5E000100AA0017 /* Assets.xcassets */; };
 	1F1000232B5E000100AA0017 /* default_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F2000232B5E000100AA0017 /* default_catalog.json */; };
-	1F1000242B5E000100AA0017 /* default_live.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F2000242B5E000100AA0017 /* default_live.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,23 +31,19 @@
 	1F2000112B5E000100AA0017 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 	1F2000122B5E000100AA0017 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 	1F2000132B5E000100AA0017 /* OnDemandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnDemandView.swift; sourceTree = "<group>"; };
-	1F2000142B5E000100AA0017 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 	1F2000152B5E000100AA0017 /* PlayerScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerScreen.swift; sourceTree = "<group>"; };
 	1F2000162B5E000100AA0017 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 	1F2000172B5E000100AA0017 /* MediaModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaModels.swift; sourceTree = "<group>"; };
-	1F2000182B5E000100AA0017 /* LiveModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveModels.swift; sourceTree = "<group>"; };
 	1F2000192B5E000100AA0017 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 	1F20001A2B5E000100AA0017 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 	1F20001B2B5E000100AA0017 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 	1F20001C2B5E000100AA0017 /* CatVodEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatVodEndpoints.swift; sourceTree = "<group>"; };
 	1F20001D2B5E000100AA0017 /* CatalogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRepository.swift; sourceTree = "<group>"; };
-	1F20001E2B5E000100AA0017 /* LiveRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRepository.swift; sourceTree = "<group>"; };
 	1F20001F2B5E000100AA0017 /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
 	1F2000202B5E000100AA0017 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 	1F2000212B5E000100AA0017 /* CatVodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatVodService.swift; sourceTree = "<group>"; };
 	1F2000222B5E000100AA0017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 	1F2000232B5E000100AA0017 /* default_catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_catalog.json; sourceTree = "<group>"; };
-	1F2000242B5E000100AA0017 /* default_live.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_live.json; sourceTree = "<group>"; };
 	1F2000252B5E000100AA0017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +102,6 @@
 		isa = PBXGroup;
 		children = (
 			1F20002E2B5E000100AA0017 /* OnDemand */,
-			1F20002F2B5E000100AA0017 /* Live */,
 			1F2000302B5E000100AA0017 /* Player */,
 			1F2000312B5E000100AA0017 /* Settings */
 		);
@@ -124,14 +115,6 @@
 			1F2000132B5E000100AA0017 /* OnDemandView.swift */
 		);
 		path = OnDemand;
-		sourceTree = "<group>";
-	};
-	1F20002F2B5E000100AA0017 /* Live */ = {
-		isa = PBXGroup;
-		children = (
-			1F2000142B5E000100AA0017 /* LiveView.swift */
-		);
-		path = Live;
 		sourceTree = "<group>";
 	};
 	1F2000302B5E000100AA0017 /* Player */ = {
@@ -154,7 +137,6 @@
 		isa = PBXGroup;
 		children = (
 			1F2000172B5E000100AA0017 /* MediaModels.swift */,
-			1F2000182B5E000100AA0017 /* LiveModels.swift */,
 			1F2000192B5E000100AA0017 /* SettingsModels.swift */,
 			1F20001A2B5E000100AA0017 /* Style.swift */
 		);
@@ -176,7 +158,6 @@
 		isa = PBXGroup;
 		children = (
 			1F20001D2B5E000100AA0017 /* CatalogRepository.swift */,
-			1F20001E2B5E000100AA0017 /* LiveRepository.swift */,
 			1F20001F2B5E000100AA0017 /* PlaybackController.swift */,
 			1F2000202B5E000100AA0017 /* SettingsStore.swift */,
 			1F2000212B5E000100AA0017 /* CatVodService.swift */
@@ -198,8 +179,7 @@
 	1F20002C2B5E000100AA0017 /* Config */ = {
 		isa = PBXGroup;
 		children = (
-			1F2000232B5E000100AA0017 /* default_catalog.json */,
-			1F2000242B5E000100AA0017 /* default_live.json */
+			1F2000232B5E000100AA0017 /* default_catalog.json */
 		);
 		path = Config;
 		sourceTree = "<group>";
@@ -264,8 +244,7 @@
 		buildActionMask = 2147483647;
 		files = (
 			1F1000222B5E000100AA0017 /* Assets.xcassets in Resources */,
-			1F1000232B5E000100AA0017 /* default_catalog.json in Resources */,
-			1F1000242B5E000100AA0017 /* default_live.json in Resources */
+			1F1000232B5E000100AA0017 /* default_catalog.json in Resources */
 		);
 		runOnlyForDeploymentPostprocessing = 0;
 	};
@@ -278,9 +257,7 @@
 		files = (
 			1F1000132B5E000100AA0017 /* OnDemandView.swift in Sources */,
 			1F1000162B5E000100AA0017 /* SettingsView.swift in Sources */,
-			1F1000142B5E000100AA0017 /* LiveView.swift in Sources */,
 			1F10001C2B5E000100AA0017 /* CatVodEndpoints.swift in Sources */,
-			1F10001E2B5E000100AA0017 /* LiveRepository.swift in Sources */,
 			1F1000202B5E000100AA0017 /* SettingsStore.swift in Sources */,
 			1F10001F2B5E000100AA0017 /* PlaybackController.swift in Sources */,
 			1F1000152B5E000100AA0017 /* PlayerScreen.swift in Sources */,
@@ -290,7 +267,6 @@
 			1F1000122B5E000100AA0017 /* ContentView.swift in Sources */,
 			1F1000172B5E000100AA0017 /* MediaModels.swift in Sources */,
 			1F1000112B5E000100AA0017 /* AppState.swift in Sources */,
-			1F1000182B5E000100AA0017 /* LiveModels.swift in Sources */,
 			1F10001D2B5E000100AA0017 /* CatalogRepository.swift in Sources */,
 			1F10001A2B5E000100AA0017 /* Style.swift in Sources */,
 			1F1000212B5E000100AA0017 /* CatVodService.swift in Sources */
