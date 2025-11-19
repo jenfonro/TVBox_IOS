@@ -6,8 +6,10 @@
     <string>影視 iOS</string>
     <key>CFBundleIdentifier</key>
     <string>com.fongmi.ios.tv</string>
-    <key>CFBundleName</key>
-    <string>TV</string>
+	<key>CFBundleName</key>
+	<string>TV</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>CFBundleVersion</key>
