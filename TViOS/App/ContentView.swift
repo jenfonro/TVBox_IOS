@@ -27,7 +27,6 @@ private struct OnDemandContainerView: View {
 }
 
 @MainActor
-@MainActor
 private struct SettingsContainerView: View {
     @EnvironmentObject private var appState: AppState
 
