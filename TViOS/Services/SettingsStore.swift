@@ -3,16 +3,12 @@ import Foundation
 @MainActor
 final class SettingsStore: ObservableObject {
     private enum Keys {
-        static let server = "settings.server"
         static let catalog = "settings.catalog"
-        static let live = "settings.live"
         static let style = "settings.style"
         static let proxy = "settings.proxy"
     }
 
-    @Published var serverAddress: String
     @Published var catalogEndpoint: String
-    @Published var liveEndpoint: String
     @Published var style: MediaStyle
     @Published var proxy: ProxyConfig?
 
@@ -20,9 +16,7 @@ final class SettingsStore: ObservableObject {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        self.serverAddress = defaults.string(forKey: Keys.server) ?? "http://127.0.0.1:9978"
         self.catalogEndpoint = defaults.string(forKey: Keys.catalog) ?? "http://tv.nxog.top/m/t"
-        self.liveEndpoint = defaults.string(forKey: Keys.live) ?? ""
         if let data = defaults.data(forKey: Keys.style),
            let decoded = try? JSONDecoder().decode(MediaStyle.self, from: data) {
             self.style = decoded
@@ -35,21 +29,9 @@ final class SettingsStore: ObservableObject {
         }
     }
 
-    var baseURL: URL? {
-        guard !serverAddress.isEmpty else { return nil }
-        if serverAddress.hasPrefix("http://") || serverAddress.hasPrefix("https://") {
-            return URL(string: serverAddress)
-        }
-        return URL(string: "http://\(serverAddress)")
-    }
-
     var catalogURL: URL? { URL(string: catalogEndpoint) }
-    var liveURL: URL? { URL(string: liveEndpoint) }
-
     func persist() {
-        defaults.set(serverAddress, forKey: Keys.server)
         defaults.set(catalogEndpoint, forKey: Keys.catalog)
-        defaults.set(liveEndpoint, forKey: Keys.live)
         if let data = try? JSONEncoder().encode(style) {
             defaults.set(data, forKey: Keys.style)
         }
@@ -61,9 +43,7 @@ final class SettingsStore: ObservableObject {
     }
 
     func reset() {
-        serverAddress = "http://127.0.0.1:9978"
         catalogEndpoint = "http://tv.nxog.top/m/t"
-        liveEndpoint = ""
         style = MediaStyle()
         proxy = nil
         persist()

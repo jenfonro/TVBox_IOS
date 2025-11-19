@@ -17,12 +17,10 @@
 		1F1000192B5E000100AA0017 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000192B5E000100AA0017 /* SettingsModels.swift */; };
 		1F10001A2B5E000100AA0017 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001A2B5E000100AA0017 /* Style.swift */; };
 	1F10001B2B5E000100AA0017 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001B2B5E000100AA0017 /* APIClient.swift */; };
-	1F10001C2B5E000100AA0017 /* CatVodEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001C2B5E000100AA0017 /* CatVodEndpoints.swift */; };
 	1F3000102B6A200100AA0017 /* ConfigResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F30000F2B6A200100AA0017 /* ConfigResolver.swift */; };
 		1F10001D2B5E000100AA0017 /* CatalogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001D2B5E000100AA0017 /* CatalogRepository.swift */; };
 		1F10001F2B5E000100AA0017 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F20001F2B5E000100AA0017 /* PlaybackController.swift */; };
 		1F1000202B5E000100AA0017 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000202B5E000100AA0017 /* SettingsStore.swift */; };
-		1F1000212B5E000100AA0017 /* CatVodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2000212B5E000100AA0017 /* CatVodService.swift */; };
 		1F1000222B5E000100AA0017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F2000222B5E000100AA0017 /* Assets.xcassets */; };
 		1F1000232B5E000100AA0017 /* default_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = 1F2000232B5E000100AA0017 /* default_catalog.json */; };
 /* End PBXBuildFile section */
@@ -39,11 +37,9 @@
 		1F2000192B5E000100AA0017 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
 		1F20001A2B5E000100AA0017 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		1F20001B2B5E000100AA0017 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		1F20001C2B5E000100AA0017 /* CatVodEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatVodEndpoints.swift; sourceTree = "<group>"; };
 		1F20001D2B5E000100AA0017 /* CatalogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRepository.swift; sourceTree = "<group>"; };
 		1F20001F2B5E000100AA0017 /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
 		1F2000202B5E000100AA0017 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
-		1F2000212B5E000100AA0017 /* CatVodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatVodService.swift; sourceTree = "<group>"; };
 		1F2000222B5E000100AA0017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 	1F2000232B5E000100AA0017 /* default_catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_catalog.json; sourceTree = "<group>"; };
 	1F2000252B5E000100AA0017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,11 +111,10 @@
 		};
 		1F2000292B5E000100AA0017 /* Networking */ = {
 			isa = PBXGroup;
-		children = (
-			1F20001B2B5E000100AA0017 /* APIClient.swift */,
-			1F20001C2B5E000100AA0017 /* CatVodEndpoints.swift */,
-			1F30000F2B6A200100AA0017 /* ConfigResolver.swift */,
-		);
+			children = (
+				1F20001B2B5E000100AA0017 /* APIClient.swift */,
+				1F30000F2B6A200100AA0017 /* ConfigResolver.swift */,
+			);
 			path = Networking;
 			sourceTree = "<group>";
 		};
@@ -129,7 +124,6 @@
 				1F20001D2B5E000100AA0017 /* CatalogRepository.swift */,
 				1F20001F2B5E000100AA0017 /* PlaybackController.swift */,
 				1F2000202B5E000100AA0017 /* SettingsStore.swift */,
-				1F2000212B5E000100AA0017 /* CatVodService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -258,7 +252,6 @@
 		files = (
 			1F1000132B5E000100AA0017 /* OnDemandView.swift in Sources */,
 			1F1000162B5E000100AA0017 /* SettingsView.swift in Sources */,
-			1F10001C2B5E000100AA0017 /* CatVodEndpoints.swift in Sources */,
 			1F1000202B5E000100AA0017 /* SettingsStore.swift in Sources */,
 			1F10001F2B5E000100AA0017 /* PlaybackController.swift in Sources */,
 			1F1000152B5E000100AA0017 /* PlayerScreen.swift in Sources */,
@@ -268,10 +261,9 @@
 			1F1000122B5E000100AA0017 /* ContentView.swift in Sources */,
 			1F3000102B6A200100AA0017 /* ConfigResolver.swift in Sources */,
 			1F1000172B5E000100AA0017 /* MediaModels.swift in Sources */,
-				1F1000112B5E000100AA0017 /* AppState.swift in Sources */,
-				1F10001D2B5E000100AA0017 /* CatalogRepository.swift in Sources */,
-				1F10001A2B5E000100AA0017 /* Style.swift in Sources */,
-				1F1000212B5E000100AA0017 /* CatVodService.swift in Sources */,
+			1F1000112B5E000100AA0017 /* AppState.swift in Sources */,
+			1F10001D2B5E000100AA0017 /* CatalogRepository.swift in Sources */,
+			1F10001A2B5E000100AA0017 /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

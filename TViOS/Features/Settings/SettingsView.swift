@@ -3,7 +3,6 @@ import SwiftUI
 @MainActor
 struct SettingsView: View {
     @ObservedObject var settings: SettingsStore
-    let catVodService: CatVodService
     @State private var statusMessage: String?
     @State private var isWorking = false
 
@@ -22,12 +21,8 @@ struct SettingsView: View {
 
     private var formContent: some View {
         Form {
-            Section(header: Text("伺服器")) {
-                TextField("CatVod 主機 (含埠)", text: $settings.serverAddress)
-                    .keyboardType(.URL)
+            Section(header: Text("點播")) {
                 TextField("點播 JSON", text: $settings.catalogEndpoint)
-                    .keyboardType(.URL)
-                TextField("直播 JSON", text: $settings.liveEndpoint)
                     .keyboardType(.URL)
             }
 
@@ -77,12 +72,6 @@ struct SettingsView: View {
                 }
             }
 
-            Section(header: Text("CatVod API")) {
-                Button("刷新詳情") { trigger(.detail) }
-                Button("刷新播放") { trigger(.player) }
-                Button("刷新直播") { trigger(.live) }
-            }
-
             if let status = statusMessage {
                 Section {
                     Text(status)
@@ -110,18 +99,4 @@ struct SettingsView: View {
         }
     }
 
-    private func trigger(_ type: CatVodActionType) {
-        guard !isWorking else { return }
-        isWorking = true
-        statusMessage = nil
-        Task {
-            defer { isWorking = false }
-            do {
-                let response = try await catVodService.refresh(type)
-                statusMessage = "完成：\(response)"
-            } catch {
-                statusMessage = "失敗：\(error.localizedDescription)"
-            }
-        }
-    }
 }
