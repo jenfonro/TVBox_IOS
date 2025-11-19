@@ -2,13 +2,24 @@ import Foundation
 
 @MainActor
 final class CatalogRepository {
+    struct ConfigPayload {
+        let data: Data
+        let source: String
+    }
+
     enum CatalogError: Error, LocalizedError {
         case missingBundleResource
+        case emptyData(String)
+        case invalidFormat(String, String)
 
         var errorDescription: String? {
             switch self {
             case .missingBundleResource:
                 return "找不到預設的點播資料"
+            case .emptyData(let source):
+                return "來源 \(source) 沒有任何內容"
+            case .invalidFormat(let source, let preview):
+                return "來源 \(source) 格式錯誤，預覽：\(preview)"
             }
         }
     }
@@ -26,8 +37,17 @@ final class CatalogRepository {
         if let endpoint = settings.catalogURL?.absoluteString, !endpoint.isEmpty {
             do {
                 var visited = Set<String>()
-                let data = try await loadConfigData(from: endpoint, visited: &visited)
-                return try decoder.decode(MediaCatalog.self, from: data)
+                let payload = try await loadConfigPayload(from: endpoint, visited: &visited)
+                guard !payload.data.isEmpty else { throw CatalogError.emptyData(payload.source) }
+                do {
+                    return try decoder.decode(MediaCatalog.self, from: payload.data)
+                } catch {
+                    let preview = String(data: payload.data, encoding: .utf8)?
+                        .prefix(200)
+                        .replacingOccurrences(of: "\n", with: " ")
+                        ?? "無法轉換為文字"
+                    throw CatalogError.invalidFormat(payload.source, String(preview))
+                }
             } catch {
                 if forceRemote { throw error }
             }
@@ -35,7 +55,7 @@ final class CatalogRepository {
         return try loadLocalCatalog()
     }
 
-    private func loadConfigData(from endpoint: String, visited: inout Set<String>) async throws -> Data {
+    private func loadConfigPayload(from endpoint: String, visited: inout Set<String>) async throws -> ConfigPayload {
         guard !visited.contains(endpoint) else {
             throw ConfigResolverError.invalidURL
         }
@@ -43,9 +63,9 @@ final class CatalogRepository {
         let resolver = ConfigResolver(client: client)
         let data = try await resolver.loadConfig(from: endpoint)
         if let next = try extractNextConfigURL(from: data) {
-            return try await loadConfigData(from: next, visited: &visited)
+            return try await loadConfigPayload(from: next, visited: &visited)
         }
-        return data
+        return ConfigPayload(data: data, source: endpoint)
     }
 
     private func extractNextConfigURL(from data: Data) -> String? {

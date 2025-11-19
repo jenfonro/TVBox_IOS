@@ -128,7 +128,7 @@ struct SettingsView: View {
             appendLog("刷新成功")
         } catch {
             statusMessage = "刷新失敗：\(error.localizedDescription)"
-            appendLog("錯誤：\(error.localizedDescription)")
+            appendLog("錯誤詳情：\(String(describing: error))")
         }
         isWorking = false
     }
