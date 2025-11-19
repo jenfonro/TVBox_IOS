@@ -48,9 +48,11 @@ final class CatalogRepository {
         return data
     }
 
-    private func extractNextConfigURL(from data: Data) throws -> String? {
-        let object = try JSONSerialization.jsonObject(with: data, options: [])
-        guard let json = object as? [String: Any] else { return nil }
+    private func extractNextConfigURL(from data: Data) -> String? {
+        guard
+            let object = try? JSONSerialization.jsonObject(with: data, options: []),
+            let json = object as? [String: Any]
+        else { return nil }
         if let urls = json["urls"] as? [[String: Any]] {
             for item in urls {
                 if let urlString = item["url"] as? String, !urlString.isEmpty {
