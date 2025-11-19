@@ -45,6 +45,7 @@
 	1F2000222B5E000100AA0017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 	1F2000232B5E000100AA0017 /* default_catalog.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = default_catalog.json; sourceTree = "<group>"; };
 	1F2000252B5E000100AA0017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+	1F2000322B6A000100AA0017 /* TViOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Support/TViOS-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +84,8 @@
 			1F2000292B5E000100AA0017 /* Networking */,
 			1F20002A2B5E000100AA0017 /* Services */,
 			1F20002B2B5E000100AA0017 /* Resources */,
-			1F2000252B5E000100AA0017 /* Info.plist */
+			1F2000252B5E000100AA0017 /* Info.plist */,
+			1F2000322B6A000100AA0017 /* TViOS-Bridging-Header.h */
 		);
 		path = TViOS;
 		sourceTree = "<group>";
@@ -297,6 +299,7 @@
 			PRODUCT_NAME = "$(TARGET_NAME)";
 			SDKROOT = iphoneos;
 			SWIFT_EMIT_LOC_STRINGS = NO;
+			SWIFT_OBJC_BRIDGING_HEADER = "TViOS/Support/TViOS-Bridging-Header.h";
 			SWIFT_VERSION = 5.9;
 			SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 			SUPPORTS_MACCATALYST = NO;
@@ -407,6 +410,7 @@
 			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 			TARGETED_DEVICE_FAMILY = "1,2";
 			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_OBJC_BRIDGING_HEADER = "TViOS/Support/TViOS-Bridging-Header.h";
 			SWIFT_VERSION = 5.9;
 		};
 		name = Release;

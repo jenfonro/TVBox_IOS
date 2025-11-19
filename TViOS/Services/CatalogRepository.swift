@@ -23,9 +23,11 @@ final class CatalogRepository {
     }
 
     func loadCatalog(forceRemote: Bool = false) async throws -> MediaCatalog {
-        if let url = settings.catalogURL {
+        if let endpoint = settings.catalogURL?.absoluteString, !endpoint.isEmpty {
             do {
-                return try await client.get(MediaCatalog.self, from: url, decoder: decoder)
+                let resolver = ConfigResolver(client: client)
+                let data = try await resolver.loadConfig(from: endpoint)
+                return try decoder.decode(MediaCatalog.self, from: data)
             } catch {
                 if forceRemote { throw error }
             }
