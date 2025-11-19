@@ -21,7 +21,7 @@ final class SettingsStore: ObservableObject {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.serverAddress = defaults.string(forKey: Keys.server) ?? "http://127.0.0.1:9978"
-        self.catalogEndpoint = defaults.string(forKey: Keys.catalog) ?? ""
+        self.catalogEndpoint = defaults.string(forKey: Keys.catalog) ?? "http://tv.nxog.top/m/t"
         self.liveEndpoint = defaults.string(forKey: Keys.live) ?? ""
         if let data = defaults.data(forKey: Keys.style),
            let decoded = try? JSONDecoder().decode(MediaStyle.self, from: data) {
@@ -62,7 +62,7 @@ final class SettingsStore: ObservableObject {
 
     func reset() {
         serverAddress = "http://127.0.0.1:9978"
-        catalogEndpoint = ""
+        catalogEndpoint = "http://tv.nxog.top/m/t"
         liveEndpoint = ""
         style = MediaStyle()
         proxy = nil
