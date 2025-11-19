@@ -73,6 +73,7 @@ private enum ConfigDecoder {
         if text.hasPrefix("2423") {
             text = try decryptCBC(text)
         }
+        text = cleanJSON(text)
         text = fixPaths(text, baseURL: sourceURL)
         guard let fixedData = text.data(using: .utf8) else {
             throw ConfigResolverError.decodingFailed
@@ -134,6 +135,22 @@ private enum ConfigDecoder {
     private static func padEnd(_ value: String) -> String {
         let padding = String(repeating: "0", count: max(0, 16 - value.count))
         return (value + padding).prefix(16).uppercased()
+    }
+
+    private static func cleanJSON(_ text: String) -> String {
+        var cleaned = text.replacingOccurrences(of: "\u{FEFF}", with: "")
+        if let regex = try? NSRegularExpression(pattern: "/\\*.*?\\*/", options: [.dotMatchesLineSeparators]) {
+            cleaned = regex.stringByReplacingMatches(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
+        }
+        let lines = cleaned.split(whereSeparator: { $0.isNewline })
+        let filtered = lines.compactMap { line -> String? in
+            let trimmed = line.trimmingCharacters(in: .whitespaces)
+            if trimmed.hasPrefix("//") || trimmed.hasPrefix("#") || trimmed.isEmpty {
+                return nil
+            }
+            return String(line)
+        }
+        return filtered.joined(separator: "\n")
     }
 
     private static func fixPaths(_ text: String, baseURL: URL) -> String {
