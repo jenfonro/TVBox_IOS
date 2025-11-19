@@ -8,16 +8,16 @@ final class CatalogRepository {
     }
 
     enum CatalogError: Error, LocalizedError {
-        case missingBundleResource
         case emptyData(String)
+        case missingEndpoint
         case invalidFormat(String, String)
 
         var errorDescription: String? {
             switch self {
-            case .missingBundleResource:
-                return "找不到預設的點播資料"
             case .emptyData(let source):
                 return "來源 \(source) 沒有任何內容"
+            case .missingEndpoint:
+                return "請先在設定中填寫有效的點播位址"
             case .invalidFormat(let source, let preview):
                 return "來源 \(source) 格式錯誤，預覽：\(preview)"
             }
@@ -34,25 +34,22 @@ final class CatalogRepository {
     }
 
     func loadCatalog(forceRemote: Bool = false) async throws -> TVBoxConfig {
-        if let endpoint = settings.catalogURL?.absoluteString, !endpoint.isEmpty {
-            do {
-                var visited = Set<String>()
-                let payload = try await loadConfigPayload(from: endpoint, visited: &visited)
-                guard !payload.data.isEmpty else { throw CatalogError.emptyData(payload.source) }
-                do {
-                    return try decoder.decode(TVBoxConfig.self, from: payload.data)
-                } catch {
-                    let preview = String(data: payload.data, encoding: .utf8)?
-                        .prefix(200)
-                        .replacingOccurrences(of: "\n", with: " ")
-                        ?? "無法轉換為文字"
-                    throw CatalogError.invalidFormat(payload.source, String(preview))
-                }
-            } catch {
-                if forceRemote { throw error }
-            }
+        guard let endpoint = settings.catalogURL?.absoluteString,
+              !endpoint.isEmpty else {
+            throw CatalogError.missingEndpoint
         }
-        return try loadLocalCatalog()
+        var visited = Set<String>()
+        let payload = try await loadConfigPayload(from: endpoint, visited: &visited)
+        guard !payload.data.isEmpty else { throw CatalogError.emptyData(payload.source) }
+        do {
+            return try decoder.decode(TVBoxConfig.self, from: payload.data)
+        } catch {
+            let preview = String(data: payload.data, encoding: .utf8)?
+                .prefix(200)
+                .replacingOccurrences(of: "\n", with: " ")
+                ?? "無法轉換為文字"
+            throw CatalogError.invalidFormat(payload.source, String(preview))
+        }
     }
 
     private func loadConfigPayload(from endpoint: String, visited: inout Set<String>) async throws -> ConfigPayload {
@@ -81,13 +78,5 @@ final class CatalogRepository {
             }
         }
         return nil
-    }
-
-    private func loadLocalCatalog() throws -> TVBoxConfig {
-        guard let resourceURL = Bundle.main.url(forResource: "default_catalog", withExtension: "json") else {
-            throw CatalogError.missingBundleResource
-        }
-        let data = try Data(contentsOf: resourceURL)
-        return try decoder.decode(TVBoxConfig.self, from: data)
     }
 }
