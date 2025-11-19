@@ -15,15 +15,20 @@ struct APIClient {
         }
     }
 
-    var proxyProvider: () -> ProxyConfig?
-    var defaultHeaders: [String: String]
+    let proxyProvider: () -> ProxyConfig?
+    let headersProvider: () -> [String: String]
 
-    init(proxyProvider: @escaping () -> ProxyConfig? = { nil }) {
+    init(
+        proxyProvider: @escaping () -> ProxyConfig? = { nil },
+        headersProvider: @escaping () -> [String: String] = {
+            [
+                "User-Agent": "TViOS/1.0",
+                "Accept": "*/*"
+            ]
+        }
+    ) {
         self.proxyProvider = proxyProvider
-        self.defaultHeaders = [
-            "User-Agent": "TViOS/1.0",
-            "Accept": "*/*"
-        ]
+        self.headersProvider = headersProvider
     }
 
     func get<T: Decodable>(_ type: T.Type, from url: URL, decoder: JSONDecoder = JSONDecoder()) async throws -> T {
@@ -62,7 +67,8 @@ struct APIClient {
     }
 
     private func applyDefaultHeaders(to request: inout URLRequest) {
-        for (key, value) in defaultHeaders where request.value(forHTTPHeaderField: key) == nil {
+        let defaults = headersProvider()
+        for (key, value) in defaults where request.value(forHTTPHeaderField: key) == nil {
             request.setValue(value, forHTTPHeaderField: key)
         }
     }

@@ -6,11 +6,13 @@ final class SettingsStore: ObservableObject {
         static let catalog = "settings.catalog"
         static let style = "settings.style"
         static let proxy = "settings.proxy"
+        static let requestMode = "settings.requestMode"
     }
 
     @Published var catalogEndpoint: String
     @Published var style: MediaStyle
     @Published var proxy: ProxyConfig?
+    @Published var requestMode: RequestMode
 
     private let defaults: UserDefaults
 
@@ -27,6 +29,12 @@ final class SettingsStore: ObservableObject {
            let decoded = try? JSONDecoder().decode(ProxyConfig.self, from: data) {
             self.proxy = decoded
         }
+        if let stored = defaults.string(forKey: Keys.requestMode),
+           let mode = RequestMode(rawValue: stored) {
+            self.requestMode = mode
+        } else {
+            self.requestMode = .apple
+        }
     }
 
     var catalogURL: URL? { URL(string: catalogEndpoint) }
@@ -40,12 +48,14 @@ final class SettingsStore: ObservableObject {
         } else {
             defaults.removeObject(forKey: Keys.proxy)
         }
+        defaults.set(requestMode.rawValue, forKey: Keys.requestMode)
     }
 
     func reset() {
         catalogEndpoint = "http://tv.nxog.top/m/t"
         style = MediaStyle()
         proxy = nil
+        requestMode = .apple
         persist()
     }
 

@@ -1,6 +1,37 @@
 import Foundation
 import CFNetwork
 
+enum RequestMode: String, CaseIterable, Codable, Identifiable {
+    case apple
+    case android
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .apple: return "蘋果"
+        case .android: return "安卓"
+        }
+    }
+
+    var defaultHeaders: [String: String] {
+        switch self {
+        case .apple:
+            return [
+                "User-Agent": "TViOS/1.0",
+                "Accept": "*/*"
+            ]
+        case .android:
+            return [
+                "User-Agent": "okhttp/3.12.13",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip",
+                "Connection": "Keep-Alive"
+            ]
+        }
+    }
+}
+
 struct ProxyConfig: Codable, Equatable {
     var scheme: String = "http"
     var host: String = ""

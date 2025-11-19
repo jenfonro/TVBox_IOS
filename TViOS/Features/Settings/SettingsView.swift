@@ -27,6 +27,12 @@ struct SettingsView: View {
             Section(header: Text("點播")) {
                 TextField("點播 JSON", text: $settings.catalogEndpoint)
                     .keyboardType(.URL)
+                Picker("請求方式", selection: $settings.requestMode) {
+                    ForEach(RequestMode.allCases) { mode in
+                        Text(mode.displayName).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
             }
 
             Section(header: Text("代理")) {

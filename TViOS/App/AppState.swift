@@ -9,6 +9,9 @@ final class AppState: ObservableObject {
     init() {
         let store = SettingsStore()
         self.settings = store
-        self.apiClient = APIClient(proxyProvider: { store.proxy })
+        self.apiClient = APIClient(
+            proxyProvider: { store.proxy },
+            headersProvider: { store.requestMode.defaultHeaders }
+        )
     }
 }
