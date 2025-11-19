@@ -176,17 +176,13 @@ private struct SiteDetailView: View {
                 if let jar = site.jar { InfoRow(title: "JAR", value: jar) }
                 if let timeout = site.timeout { InfoRow(title: "Timeout", value: "\(timeout)s") }
             }
-            if let ext = site.ext {
-                Section(header: Text("EXT")) {
-                    if let json = ext.json { InfoRow(title: "JSON", value: json) }
-                    if let headers = ext.requestHeaders { InfoRow(title: "Headers", value: headers) }
-                    if let other = ext.other, !other.isEmpty {
-                        ForEach(other.keys.sorted(), id: \.self) { key in
-                            InfoRow(title: key, value: other[key] ?? "")
-                        }
-                    }
+        if !site.extPairs.isEmpty {
+            Section(header: Text("EXT")) {
+                ForEach(site.extPairs, id: \.0) { key, value in
+                    InfoRow(title: key, value: value)
                 }
             }
+        }
         }
         .navigationTitle(site.name)
         .toolbar {
