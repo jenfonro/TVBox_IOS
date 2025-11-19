@@ -16,14 +16,19 @@ struct APIClient {
     }
 
     var proxyProvider: () -> ProxyConfig?
+    var defaultHeaders: [String: String]
 
     init(proxyProvider: @escaping () -> ProxyConfig? = { nil }) {
         self.proxyProvider = proxyProvider
+        self.defaultHeaders = [
+            "User-Agent": "okhttp/3.12.13",
+            "Accept": "*/*"
+        ]
     }
 
     func get<T: Decodable>(_ type: T.Type, from url: URL, decoder: JSONDecoder = JSONDecoder()) async throws -> T {
         var request = URLRequest(url: url)
-        request.setValue("iOSTV/1.0", forHTTPHeaderField: "User-Agent")
+        applyDefaultHeaders(to: &request)
         let data = try await data(for: request)
         return try decoder.decode(T.self, from: data)
     }
@@ -33,6 +38,8 @@ struct APIClient {
     }
 
     func data(for request: URLRequest) async throws -> Data {
+        var request = request
+        applyDefaultHeaders(to: &request)
         let (data, response) = try await session().data(for: request)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw APIError.invalidResponse
@@ -52,5 +59,11 @@ struct APIClient {
             configuration.connectionProxyDictionary = proxy.connectionDictionary
         }
         return URLSession(configuration: configuration)
+    }
+
+    private func applyDefaultHeaders(to request: inout URLRequest) {
+        for (key, value) in defaultHeaders where request.value(forHTTPHeaderField: key) == nil {
+            request.setValue(value, forHTTPHeaderField: key)
+        }
     }
 }
