@@ -27,10 +27,12 @@ private struct OnDemandContainerView: View {
 }
 
 @MainActor
+@MainActor
 private struct SettingsContainerView: View {
     @EnvironmentObject private var appState: AppState
 
     var body: some View {
         SettingsView(settings: appState.settings)
+            .environmentObject(appState)
     }
 }

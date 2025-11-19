@@ -5,6 +5,9 @@ struct SettingsView: View {
     @ObservedObject var settings: SettingsStore
     @State private var statusMessage: String?
     @State private var isWorking = false
+    @State private var debugLog: [String] = []
+
+    @EnvironmentObject private var appState: AppState
 
     var body: some View {
         navigationContainer
@@ -73,10 +76,22 @@ struct SettingsView: View {
             }
 
             if let status = statusMessage {
-                Section {
+                Section(header: Text("Debug")) {
                     Text(status)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
+                    if !debugLog.isEmpty {
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 4) {
+                                ForEach(debugLog.indices, id: \.self) { index in
+                                    Text(debugLog[index])
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                        }
+                        .frame(height: 120)
+                    }
                 }
             }
 
@@ -87,6 +102,9 @@ struct SettingsView: View {
                 }
                 Button("恢復預設", role: .destructive) {
                     settings.reset()
+                }
+                Button("刷新點播") {
+                    Task { await refreshCatalog() }
                 }
             }
         }
@@ -99,4 +117,26 @@ struct SettingsView: View {
         }
     }
 
+    private func refreshCatalog() async {
+        guard !isWorking else { return }
+        isWorking = true
+        statusMessage = "正在刷新..."
+        appendLog("開始刷新配置：\(settings.catalogEndpoint)")
+        do {
+            let catalog = try await appState.catalogRepository.loadCatalog(forceRemote: true)
+            statusMessage = "刷新完成，共 \(catalog.sites.count) 個站點"
+            appendLog("刷新成功")
+        } catch {
+            statusMessage = "刷新失敗：\(error.localizedDescription)"
+            appendLog("錯誤：\(error.localizedDescription)")
+        }
+        isWorking = false
+    }
+
+    private func appendLog(_ message: String) {
+        debugLog.append("[\(Date().description)] \(message)")
+        if debugLog.count > 20 {
+            debugLog.removeFirst(debugLog.count - 20)
+        }
+    }
 }
