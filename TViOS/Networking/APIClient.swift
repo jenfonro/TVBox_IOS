@@ -21,10 +21,8 @@ struct APIClient {
     init(proxyProvider: @escaping () -> ProxyConfig? = { nil }) {
         self.proxyProvider = proxyProvider
         self.defaultHeaders = [
-            "User-Agent": "Mozilla/5.0 (Linux; Android 11; TVBOX Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.61 Mobile Safari/537.36",
-            "Accept": "application/json,text/plain,*/*",
-            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
-            "Accept-Encoding": "gzip, deflate"
+            "User-Agent": "TViOS/1.0",
+            "Accept": "*/*"
         ]
     }
 
