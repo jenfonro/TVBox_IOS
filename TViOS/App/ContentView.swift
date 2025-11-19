@@ -19,8 +19,7 @@ private struct OnDemandContainerView: View {
     var body: some View {
         OnDemandView(
             viewModel: OnDemandViewModel(
-                repository: appState.catalogRepository,
-                playbackController: appState.playbackController
+                repository: appState.catalogRepository
             )
         )
     }

@@ -1,75 +1,49 @@
 import Foundation
 
-struct MediaCatalog: Codable {
-    var style: MediaStyle?
-    var sites: [MediaSite]
+struct TVBoxConfig: Codable {
+    var spider: String?
+    var wallpaper: String?
+    var sites: [TVBoxSite]
 }
 
-struct MediaSite: Codable, Identifiable {
+struct TVBoxSite: Codable, Identifiable {
     let key: String
     let name: String
-    let searchable: Int
-    let changeable: Int
-    let quickSearch: Int
-    let indexs: Int
-    let hide: Int
-    let timeout: Int
-    let header: [String: String]?
+    let type: Int?
+    let api: String?
+    let searchable: Int?
+    let quickSearch: Int?
+    let changeable: Int?
+    let filterable: Int?
+    let playerType: Int?
+    let timeout: Int?
+    let ext: TVBoxSiteExtra?
+    let jar: String?
     let click: String?
-    let style: MediaStyle?
-    let categories: [MediaCategory]
 
     var id: String { key }
 
-    enum CodingKeys: String, CodingKey {
-        case key, name, searchable, changeable, indexs, hide, timeout, header, click, style, categories
-        case quickSearch = "quickserch"
+    var metadataDescription: String {
+        var items: [String] = []
+        if let type { items.append("type: \(type)") }
+        if let api, !api.isEmpty { items.append("api: \(api)") }
+        if let searchable { items.append("searchable: \(searchable)") }
+        if let quickSearch { items.append("quickSearch: \(quickSearch)") }
+        if let changeable { items.append("changeable: \(changeable)") }
+        if let filterable { items.append("filterable: \(filterable)") }
+        if let playerType { items.append("playerType: \(playerType)") }
+        return items.joined(separator: " | ")
     }
 }
 
-struct MediaCategory: Codable, Identifiable {
-    let id: String
-    let name: String
-    let filters: [MediaFilter]
-    let items: [MediaItem]
-}
-
-struct MediaFilter: Codable, Identifiable {
-    let id: String
-    let name: String
-    let options: [MediaFilterOption]
-}
-
-struct MediaFilterOption: Codable, Identifiable {
-    let id: String
-    let name: String
+struct TVBoxSiteExtra: Codable {
+    let json: String?
+    let requestHeaders: String?
+    let other: [String: String]?
 
     enum CodingKeys: String, CodingKey {
-        case id = "value"
-        case name
+        case json
+        case requestHeaders = "请求头"
+        case other
     }
-}
-
-struct MediaItem: Codable, Identifiable {
-    let id: String
-    let name: String
-    let remarks: String?
-    let area: String?
-    let director: String?
-    let actor: String?
-    let year: String?
-    let poster: String?
-    let style: MediaStyle?
-    let playUrl: String?
-
-    var posterURL: URL? { poster.flatMap(URL.init(string:)) }
-    var streamURL: URL? { playUrl.flatMap(URL.init(string:)) }
-}
-
-struct PlayableItem: Identifiable, Equatable {
-    let id = UUID()
-    let title: String
-    let subtitle: String?
-    let artworkURL: URL?
-    let streamURL: URL
 }

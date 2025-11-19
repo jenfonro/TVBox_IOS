@@ -1,7 +1,21 @@
 {
-  "style": {
-    "type": "rect",
-    "ratio": 0.75
-  },
-  "sites": []
+  "spider": "",
+  "wallpaper": "",
+  "sites": [
+    {
+      "key": "sample",
+      "name": "示例站點",
+      "type": 3,
+      "api": "https://example.com/api",
+      "searchable": 1,
+      "quickSearch": 1,
+      "changeable": 1,
+      "filterable": 1,
+      "playerType": 1,
+      "timeout": 15,
+      "ext": {
+        "json": "https://example.com/ext.json"
+      }
+    }
+  ]
 }

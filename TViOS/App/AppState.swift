@@ -5,7 +5,6 @@ final class AppState: ObservableObject {
     let settings: SettingsStore
     let apiClient: APIClient
     lazy var catalogRepository = CatalogRepository(client: apiClient, settings: settings)
-    let playbackController = PlaybackController()
 
     init() {
         let store = SettingsStore()

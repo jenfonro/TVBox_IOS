@@ -33,14 +33,14 @@ final class CatalogRepository {
         self.settings = settings
     }
 
-    func loadCatalog(forceRemote: Bool = false) async throws -> MediaCatalog {
+    func loadCatalog(forceRemote: Bool = false) async throws -> TVBoxConfig {
         if let endpoint = settings.catalogURL?.absoluteString, !endpoint.isEmpty {
             do {
                 var visited = Set<String>()
                 let payload = try await loadConfigPayload(from: endpoint, visited: &visited)
                 guard !payload.data.isEmpty else { throw CatalogError.emptyData(payload.source) }
                 do {
-                    return try decoder.decode(MediaCatalog.self, from: payload.data)
+                    return try decoder.decode(TVBoxConfig.self, from: payload.data)
                 } catch {
                     let preview = String(data: payload.data, encoding: .utf8)?
                         .prefix(200)
@@ -83,11 +83,11 @@ final class CatalogRepository {
         return nil
     }
 
-    private func loadLocalCatalog() throws -> MediaCatalog {
+    private func loadLocalCatalog() throws -> TVBoxConfig {
         guard let resourceURL = Bundle.main.url(forResource: "default_catalog", withExtension: "json") else {
             throw CatalogError.missingBundleResource
         }
         let data = try Data(contentsOf: resourceURL)
-        return try decoder.decode(MediaCatalog.self, from: data)
+        return try decoder.decode(TVBoxConfig.self, from: data)
     }
 }
