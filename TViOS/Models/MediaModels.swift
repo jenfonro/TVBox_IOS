@@ -3,7 +3,76 @@ import Foundation
 struct TVBoxConfig: Codable {
     var spider: String?
     var wallpaper: String?
+    var logo: String?
+    var notice: String?
     var sites: [TVBoxSite]
+    var lives: [TVBoxLive]
+    var parses: [TVBoxParse]
+    var rules: [TVBoxRule]
+    var headers: [TVBoxHeaderRule]
+    var hosts: [String]
+    var flags: [String]
+    var ads: [String]
+    var proxy: [TVBoxProxyRule]
+    var doh: [TVBoxDoH]
+    var urls: [TVBoxDepot]
+
+    private enum CodingKeys: String, CodingKey {
+        case spider, wallpaper, logo, notice, sites, lives, parses, rules, headers, hosts, flags, ads, proxy, doh, urls
+    }
+
+    init(
+        spider: String? = nil,
+        wallpaper: String? = nil,
+        logo: String? = nil,
+        notice: String? = nil,
+        sites: [TVBoxSite] = [],
+        lives: [TVBoxLive] = [],
+        parses: [TVBoxParse] = [],
+        rules: [TVBoxRule] = [],
+        headers: [TVBoxHeaderRule] = [],
+        hosts: [String] = [],
+        flags: [String] = [],
+        ads: [String] = [],
+        proxy: [TVBoxProxyRule] = [],
+        doh: [TVBoxDoH] = [],
+        urls: [TVBoxDepot] = []
+    ) {
+        self.spider = spider
+        self.wallpaper = wallpaper
+        self.logo = logo
+        self.notice = notice
+        self.sites = sites
+        self.lives = lives
+        self.parses = parses
+        self.rules = rules
+        self.headers = headers
+        self.hosts = hosts
+        self.flags = flags
+        self.ads = ads
+        self.proxy = proxy
+        self.doh = doh
+        self.urls = urls
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.spider = try container.decodeIfPresent(String.self, forKey: .spider)
+        self.wallpaper = try container.decodeIfPresent(String.self, forKey: .wallpaper)
+        self.logo = try container.decodeIfPresent(String.self, forKey: .logo)
+        self.notice = try container.decodeIfPresent(String.self, forKey: .notice)
+        self.sites = try container.decodeIfPresent([TVBoxSite].self, forKey: .sites) ?? []
+        self.lives = try container.decodeIfPresent([TVBoxLive].self, forKey: .lives) ?? []
+        self.parses = try container.decodeIfPresent([TVBoxParse].self, forKey: .parses) ?? []
+        self.rules = try container.decodeIfPresent([TVBoxRule].self, forKey: .rules) ?? []
+        self.headers = try container.decodeIfPresent([TVBoxHeaderRule].self, forKey: .headers) ?? []
+        self.hosts = try container.decodeIfPresent([String].self, forKey: .hosts) ?? []
+        self.flags = try container.decodeIfPresent([String].self, forKey: .flags) ?? []
+        self.ads = try container.decodeIfPresent([String].self, forKey: .ads) ?? []
+        self.proxy = try container.decodeIfPresent([TVBoxProxyRule].self, forKey: .proxy) ?? []
+        self.doh = try container.decodeIfPresent([TVBoxDoH].self, forKey: .doh) ?? []
+        self.urls = try container.decodeIfPresent([TVBoxDepot].self, forKey: .urls) ?? []
+    }
 }
 
 struct TVBoxSite: Codable, Identifiable {
@@ -17,11 +86,20 @@ struct TVBoxSite: Codable, Identifiable {
     let filterable: Int?
     let playerType: Int?
     let timeout: Int?
-    let ext: [String: JSONValue]?
+    let ext: JSONValue?
     let jar: String?
     let click: String?
+    let playUrl: String?
+    let categories: [String]?
+    let header: JSONValue?
+    let style: TVBoxCardStyle?
+    let hide: Int?
+    let indexs: Int?
 
     var id: String { key }
+    var isSearchable: Bool { (searchable ?? 1) == 1 }
+    var isQuickSearch: Bool { (quickSearch ?? 1) == 1 }
+    var isChangeable: Bool { (changeable ?? 1) == 1 }
 
     var metadataDescription: String {
         var items: [String] = []
@@ -37,10 +115,83 @@ struct TVBoxSite: Codable, Identifiable {
 
     var extPairs: [(String, String)] {
         guard let ext else { return [] }
-        return ext
-            .map { ($0.key, $0.value.displayValue) }
-            .sorted { $0.0 < $1.0 }
+        switch ext {
+        case .object(let dict):
+            return dict
+                .map { ($0.key, $0.value.displayValue) }
+                .sorted { $0.0 < $1.0 }
+        default:
+            return [("value", ext.displayValue)]
+        }
     }
+}
+
+struct TVBoxCardStyle: Codable {
+    let type: String?
+    let ratio: Double?
+
+    var resolvedType: String { type ?? "rect" }
+    var resolvedRatio: Double {
+        guard let ratio, ratio > 0 else { return resolvedType == "oval" ? 1.0 : 0.75 }
+        return min(4, ratio)
+    }
+}
+
+struct TVBoxLive: Codable, Identifiable {
+    var id: String { name }
+    let name: String
+    let type: Int?
+    let url: String
+    let epg: String?
+    let logo: String?
+}
+
+struct TVBoxParse: Codable, Identifiable {
+    var id: String { name }
+    let name: String
+    let type: Int?
+    let url: String?
+    let ext: TVBoxParseExt?
+}
+
+struct TVBoxParseExt: Codable {
+    let flag: [String]?
+    let header: [String: String]?
+}
+
+struct TVBoxRule: Codable, Identifiable {
+    var id: String { name ?? UUID().uuidString }
+    let name: String?
+    let hosts: [String]?
+    let regex: [String]?
+    let script: [String]?
+    let exclude: [String]?
+}
+
+struct TVBoxHeaderRule: Codable, Identifiable {
+    var id: String { host ?? UUID().uuidString }
+    let host: String?
+    let header: [String: String]
+}
+
+struct TVBoxProxyRule: Codable, Identifiable {
+    var id: String { name ?? UUID().uuidString }
+    let name: String?
+    let hosts: [String]?
+    let urls: [String]?
+}
+
+struct TVBoxDoH: Codable, Identifiable {
+    var id: String { name ?? (url ?? UUID().uuidString) }
+    let name: String?
+    let url: String?
+    let ips: [String]?
+}
+
+struct TVBoxDepot: Codable, Identifiable {
+    var id: String { url }
+    let url: String
+    let name: String?
 }
 
 enum JSONValue: Codable {
