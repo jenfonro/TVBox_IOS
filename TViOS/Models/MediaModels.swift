@@ -124,6 +124,74 @@ struct TVBoxSite: Codable, Identifiable {
             return [("value", ext.displayValue)]
         }
     }
+    private enum CodingKeys: String, CodingKey {
+        case key, name, type, api, searchable, quickSearch, changeable, filterable, playerType, timeout, ext, jar, click, playUrl, categories, header, style, hide, indexs
+    }
+
+    init(
+        key: String,
+        name: String,
+        type: Int? = nil,
+        api: String? = nil,
+        searchable: Int? = nil,
+        quickSearch: Int? = nil,
+        changeable: Int? = nil,
+        filterable: Int? = nil,
+        playerType: Int? = nil,
+        timeout: Int? = nil,
+        ext: JSONValue? = nil,
+        jar: String? = nil,
+        click: String? = nil,
+        playUrl: String? = nil,
+        categories: [String]? = nil,
+        header: JSONValue? = nil,
+        style: TVBoxCardStyle? = nil,
+        hide: Int? = nil,
+        indexs: Int? = nil
+    ) {
+        self.key = key
+        self.name = name
+        self.type = type
+        self.api = api
+        self.searchable = searchable
+        self.quickSearch = quickSearch
+        self.changeable = changeable
+        self.filterable = filterable
+        self.playerType = playerType
+        self.timeout = timeout
+        self.ext = ext
+        self.jar = jar
+        self.click = click
+        self.playUrl = playUrl
+        self.categories = categories
+        self.header = header
+        self.style = style
+        self.hide = hide
+        self.indexs = indexs
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.key = try container.decode(String.self, forKey: .key)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.type = container.decodeFlexibleInt(forKey: .type)
+        self.api = try container.decodeIfPresent(String.self, forKey: .api)
+        self.searchable = container.decodeFlexibleInt(forKey: .searchable)
+        self.quickSearch = container.decodeFlexibleInt(forKey: .quickSearch)
+        self.changeable = container.decodeFlexibleInt(forKey: .changeable)
+        self.filterable = container.decodeFlexibleInt(forKey: .filterable)
+        self.playerType = container.decodeFlexibleInt(forKey: .playerType)
+        self.timeout = container.decodeFlexibleInt(forKey: .timeout)
+        self.ext = try container.decodeIfPresent(JSONValue.self, forKey: .ext)
+        self.jar = try container.decodeIfPresent(String.self, forKey: .jar)
+        self.click = try container.decodeIfPresent(String.self, forKey: .click)
+        self.playUrl = try container.decodeIfPresent(String.self, forKey: .playUrl)
+        self.categories = try container.decodeIfPresent([String].self, forKey: .categories)
+        self.header = try container.decodeIfPresent(JSONValue.self, forKey: .header)
+        self.style = try container.decodeIfPresent(TVBoxCardStyle.self, forKey: .style)
+        self.hide = container.decodeFlexibleInt(forKey: .hide)
+        self.indexs = container.decodeFlexibleInt(forKey: .indexs)
+    }
 }
 
 struct TVBoxCardStyle: Codable {
@@ -144,6 +212,25 @@ struct TVBoxLive: Codable, Identifiable {
     let url: String
     let epg: String?
     let logo: String?
+
+    private enum CodingKeys: String, CodingKey { case name, type, url, epg, logo }
+
+    init(name: String, type: Int? = nil, url: String, epg: String? = nil, logo: String? = nil) {
+        self.name = name
+        self.type = type
+        self.url = url
+        self.epg = epg
+        self.logo = logo
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.type = container.decodeFlexibleInt(forKey: .type)
+        self.url = try container.decode(String.self, forKey: .url)
+        self.epg = try container.decodeIfPresent(String.self, forKey: .epg)
+        self.logo = try container.decodeIfPresent(String.self, forKey: .logo)
+    }
 }
 
 struct TVBoxParse: Codable, Identifiable {
@@ -152,6 +239,23 @@ struct TVBoxParse: Codable, Identifiable {
     let type: Int?
     let url: String?
     let ext: TVBoxParseExt?
+
+    private enum CodingKeys: String, CodingKey { case name, type, url, ext }
+
+    init(name: String, type: Int? = nil, url: String? = nil, ext: TVBoxParseExt? = nil) {
+        self.name = name
+        self.type = type
+        self.url = url
+        self.ext = ext
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.type = container.decodeFlexibleInt(forKey: .type)
+        self.url = try container.decodeIfPresent(String.self, forKey: .url)
+        self.ext = try container.decodeIfPresent(TVBoxParseExt.self, forKey: .ext)
+    }
 }
 
 struct TVBoxParseExt: Codable {
@@ -250,5 +354,17 @@ enum JSONValue: Codable {
             }
             return "(object)"
         }
+    }
+}
+
+private extension KeyedDecodingContainer {
+    func decodeFlexibleInt(forKey key: Key) -> Int? {
+        if let value = try? decodeIfPresent(Int.self, forKey: key) {
+            return value
+        }
+        if let string = try? decodeIfPresent(String.self, forKey: key) {
+            return Int(string)
+        }
+        return nil
     }
 }
